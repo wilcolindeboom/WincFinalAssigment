@@ -7,12 +7,12 @@ const getBookings = async (userid) => {
       userId: userid,
     },
   });
+
   if (!bookings || bookings.length === 0) {
-    const error = new Error(`${userid ? `booking for user ${userid} not found` : "No bookings found"}`);
-    error.name = "NotFoundError";
-    error.status = 404;
-    throw error;
+    if (!userid) throw new NotFoundError("No bookings found");
+    else throw new NotFoundError(`Booking for user ${userid} not found`);
   }
+
   return bookings;
 };
 
