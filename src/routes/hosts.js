@@ -70,9 +70,6 @@ router.put(
     try {
       const { id } = req.params;
       const { username, password, name, email, phoneNumber, pictureUrl, aboutMe } = req.body;
-      if (!username || !password || !name || !email || !phoneNumber || !pictureUrl || !aboutMe) {
-        return res.status(400).json({ error: "Missing required host fields" });
-      }
       const host = await updateHostById(id, { username, password, name, email, phoneNumber, pictureUrl, aboutMe });
       res.status(200).send({
         message: `Host with id ${id} successfully updated`,

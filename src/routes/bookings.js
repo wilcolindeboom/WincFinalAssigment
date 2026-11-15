@@ -74,9 +74,6 @@ router.put(
     try {
       const { id } = req.params;
       const { userId, propertyId, checkinDate, checkoutDate, numberOfGuests, totalPrice, bookingStatus } = req.body;
-      if (!userId || !propertyId || !checkinDate || !checkoutDate || !numberOfGuests || !totalPrice || !bookingStatus) {
-        return res.status(400).json({ error: "Missing required booking fields" });
-      }
       const booking = await updateBookingById(id, {
         userId,
         propertyId,
