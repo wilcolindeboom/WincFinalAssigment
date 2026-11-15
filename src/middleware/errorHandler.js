@@ -10,6 +10,8 @@ const errorHandler = (err, req, res, next) => {
     }
     res.status(400).json({ message: "Data handling error", details: { name: err.name, code: err.code, meta: err.meta } });
   }
+  console.error("Error details:", err.status, err.message, err.name);
+
   if (err.status && err.status !== 500) {
     res.status(err.status).json({ message: err.message });
   } else {

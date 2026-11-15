@@ -2,7 +2,7 @@ import "dotenv/config";
 import * as Sentry from "@sentry/node";
 
 Sentry.init({
-  dsn: SENTRY_DSN,
+  dsn: process.env.SENTRY_DSN,
   dataCollection: {
     // To disable sending user data and HTTP bodies, uncomment the lines below. For more info visit:
     // https://docs.sentry.io/platforms/javascript/guides/node/configuration/options/#dataCollection

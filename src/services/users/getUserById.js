@@ -3,6 +3,10 @@ import prisma from "../prismaClient.js";
 const getUserById = async (id) => {
   const user = await prisma.user.findUnique({
     where: { id },
+    select: {
+      username: true,
+      email: true,
+    },
   });
 
   if (!user) {

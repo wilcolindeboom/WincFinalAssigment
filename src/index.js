@@ -1,7 +1,6 @@
+import "dotenv/config";
 import "./instrument.js";
 import express from "express";
-// import * as Sentry from "@sentry/node";
-import "dotenv/config";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { readFileSync } from "fs";

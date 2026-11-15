@@ -3,6 +3,10 @@ import prisma from "../prismaClient.js";
 const getHostById = async (id) => {
   const host = await prisma.host.findUnique({
     where: { id },
+    select: {
+      username: true,
+      email: true,
+    },
   });
 
   if (!host) {

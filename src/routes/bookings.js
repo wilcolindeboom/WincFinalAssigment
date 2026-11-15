@@ -27,10 +27,10 @@ router.post("/", auth, async (req, res) => {
   if (!req.body) {
     return res.status(400).json({ error: "Request body is missing" });
   }
-  if (!req.body.userId || !req.body.propertyId || !req.body.checkinDate || !req.body.checkoutDate || !req.body.numberOfGuests || !req.body.totalPrice || !req.body.bookingStatus) {
+  const { userId, propertyId, checkinDate, checkoutDate, numberOfGuests, totalPrice, bookingStatus } = req.body;
+  if (!userId || !propertyId || !checkinDate || !checkoutDate || !numberOfGuests || !totalPrice || !bookingStatus) {
     return res.status(400).json({ error: "Missing required booking fields" });
   }
-  const { userId, propertyId, checkinDate, checkoutDate, numberOfGuests, totalPrice, bookingStatus } = req.body;
   const newBooking = await createBooking(userId, propertyId, checkinDate, checkoutDate, numberOfGuests, totalPrice, bookingStatus);
   res.status(201).json(newBooking);
 });
@@ -74,6 +74,9 @@ router.put(
     try {
       const { id } = req.params;
       const { userId, propertyId, checkinDate, checkoutDate, numberOfGuests, totalPrice, bookingStatus } = req.body;
+      if (!userId || !propertyId || !checkinDate || !checkoutDate || !numberOfGuests || !totalPrice || !bookingStatus) {
+        return res.status(400).json({ error: "Missing required booking fields" });
+      }
       const booking = await updateBookingById(id, {
         userId,
         propertyId,

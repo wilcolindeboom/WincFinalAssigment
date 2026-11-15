@@ -7,6 +7,10 @@ const getUsers = async (username, email) => {
       username,
       email,
     },
+    select: {
+      username: true,
+      email: true,
+    },
   });
   if (!users || users.length === 0) {
     if (!username && !email) {

@@ -27,11 +27,7 @@ router.post("/", auth, async (req, res) => {
   if (!req.body) {
     return res.status(400).json({ error: "Request body is missing" });
   }
-  if (!req.body.title || !req.body.description || !req.body.location || !req.body.pricePerNight || !req.body.bedroomCount || !req.body.bathRoomCount || !req.body.maxGuestCount || !req.body.hostId) {
-    return res.status(400).json({ error: "Missing required property fields" });
-  }
   const { title, description, location, pricePerNight, bedroomCount, bathRoomCount, maxGuestCount, hostId, rating } = req.body;
-
   if (!title || !description || !location || !pricePerNight || !bedroomCount || !bathRoomCount || !maxGuestCount || !hostId) {
     return res.status(400).json({ error: "Missing required property fields" });
   }
@@ -96,6 +92,26 @@ router.put(
     try {
       const { id } = req.params;
       const { title, description, location, pricePerNight, bedroomCount, bathRoomCount, maxGuestCount, rating } = req.body;
+      if (!title || !description || !location || !pricePerNight || !bedroomCount || !bathRoomCount || !maxGuestCount) {
+        return res.status(400).json({ error: "Missing required property fields" });
+      }
+      const numericPricePerNight = Number(pricePerNight);
+      const numericBedroomCount = Number(bedroomCount);
+      const numericBathRoomCount = Number(bathRoomCount);
+      const numericMaxGuestCount = Number(maxGuestCount);
+      const numericRating = rating ? Number(rating) : null;
+
+      if (isNaN(numericPricePerNight) || isNaN(numericBedroomCount) || isNaN(numericBathRoomCount) || isNaN(numericMaxGuestCount) || (rating && isNaN(numericRating))) {
+        return res.status(400).json({ error: "Price, bedroom count, bathroom count, max guest count, and rating must be valid numbers" });
+      }
+
+      const titleTrimmed = title.trim();
+      const descriptionTrimmed = description.trim();
+      const locationTrimmed = location.trim();
+
+      if (!titleTrimmed || !descriptionTrimmed || !locationTrimmed) {
+        return res.status(400).json({ error: "Title, description, and location cannot be empty" });
+      }
       const property = await updatePropertyById(id, { title, description, location, pricePerNight, bedroomCount, bathRoomCount, maxGuestCount, rating });
       res.status(200).send({
         message: `Property with id ${id} successfully updated`,
