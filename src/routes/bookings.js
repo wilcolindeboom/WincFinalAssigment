@@ -14,6 +14,9 @@ router.get(
   async (req, res, next) => {
     try {
       const { userid } = req.query;
+      if (!userid) {
+        return res.status(400).json({ error: "Missing required query parameter: userid" });
+      }
       const bookings = await getBookings(userid);
       res.json(bookings);
     } catch (error) {

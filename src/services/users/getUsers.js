@@ -8,8 +8,12 @@ const getUsers = async (username, email) => {
       email,
     },
     select: {
+      id: true,
       username: true,
       email: true,
+      phoneNumber: true,
+      pictureUrl: true,
+      name: true,
     },
   });
   if (!users || users.length === 0) {
