@@ -7,10 +7,15 @@ const getHosts = async (name) => {
       name: {
         contains: name,
       },
-      select: {
-        username: true,
-        email: true,
-      },
+    },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      phoneNumber: true,
+      pictureUrl: true,
+      name: true,
+      aboutMe: true,
     },
   });
   if (!hosts || hosts.length === 0) {
